@@ -4,6 +4,7 @@ import { Card, Button } from "react-bootstrap";
 function BadgerMessage(props) {
 
     const date = new Date(props.created);
+    
 
     const handleDelete = () => {
         fetch(`https://cs571api.cs.wisc.edu/rest/su24/hw6/messages?id=${props.id}`, {

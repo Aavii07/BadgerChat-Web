@@ -72,9 +72,10 @@ export default function BadgerLogin() {
         <Form onSubmit={handleLogin}>
 
                 <Form.Group style={{marginTop: "1rem", fontSize: '20px'}}>
-                    <Form.Label> Username </Form.Label>
+                    <Form.Label htmlFor="usernameInput"> Username </Form.Label>
                     <Form.Control 
                         type="text" 
+                        id="usernameInput"
                         ref={usernameReference} 
                         placeholder="enter username"
                         style={{ backgroundColor: '#f0f8ff' }}
@@ -82,10 +83,11 @@ export default function BadgerLogin() {
                 </Form.Group>
 
                 <Form.Group style={{marginTop: "1rem", fontSize: '20px'}}>
-                    <Form.Label> Pin </Form.Label>
+                    <Form.Label htmlFor="pinInput"> Pin </Form.Label>
                     <Form.Control 
                         type="password" 
                         ref={pinReference}
+                        id="pinInput"
                         placeholder="enter 7 digit pin" 
                         style={{ backgroundColor: '#f0f8ff' }}
                         autoComplete="new-password"

@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
 export default function BadgerRegister() {
@@ -73,11 +73,12 @@ export default function BadgerRegister() {
             <Form onSubmit={handleRegisteration} >
                 <Form.Group>
 
-                    <Form.Label style={{marginTop: "1rem", fontSize: '20px'}}> 
+                    <Form.Label htmlFor="newUsername" style={{marginTop: "1rem", fontSize: '20px'}}> 
                         Username </Form.Label>
                     <Form.Control
                         type="text"
                         ref={usernameReference}
+                        id = "newUsername"
                         placeholder="example: bob jones"
                         style={{ backgroundColor: '#f0f8ff' }} // light blue text field
                     />
@@ -85,11 +86,12 @@ export default function BadgerRegister() {
 
                 <Form.Group>
 
-                    <Form.Label style={{marginTop: "1rem", fontSize: '20px'}}>
+                    <Form.Label htmlFor="newPin" style={{marginTop: "1rem", fontSize: '20px'}}>
                         Pin</Form.Label>
                     <Form.Control
                         type="password"
                         ref={pinReference}
+                        id = "newPin"
                         placeholder="example: 1234567" 
                         style={{ backgroundColor: '#f0f8ff' }}
                         autoComplete="new-password"
@@ -98,11 +100,12 @@ export default function BadgerRegister() {
 
                 <Form.Group>
 
-                    <Form.Label style={{marginTop: "1rem", fontSize: '20px'}}>
+                    <Form.Label htmlFor="confirmNewPin" style={{marginTop: "1rem", fontSize: '20px'}}>
                         Confirm Pin</Form.Label>
                     <Form.Control
                         type="password"
                         ref={confirmPinReference}
+                        id = "confirmNewPin"
                         placeholder="example: 1234567"
                         style={{ backgroundColor: '#f0f8ff' }}
                         autoComplete="new-password"

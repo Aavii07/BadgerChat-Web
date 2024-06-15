@@ -32,10 +32,9 @@ export default function BadgerChatroom(props) {
 
     // update messages display
     useEffect(() => {
-        const startIndex = (currentPage - 1) * 25;
-        const endIndex = currentPage * 25;
+        const startIndex = (currentPage - 1) * 2;
+        const endIndex = currentPage * 2;
         setDisplayedPosts(messages.slice(startIndex, endIndex));
-        console.log(displayedPosts);
     }, [messages]);
 
 
@@ -95,12 +94,12 @@ export default function BadgerChatroom(props) {
             {loginStatus ? ( 
                 <Form onSubmit={handlePostSubmit}> 
                     <Form.Group controlId="title"> {/* controlId needs to be in Form.Group to reference */}
-                        <Form.Label> Title </Form.Label>
-                        <Form.Control type="text" placeholder="Enter title"/>
+                        <Form.Label htmlFor="postTitle"> Title </Form.Label>
+                        <Form.Control type="text" id = "postTitle" placeholder="Enter title"/>
                     </Form.Group> 
                     <Form.Group controlId="contents"> 
-                        <Form.Label> Content </Form.Label>
-                        <Form.Control as="textarea" rows={3} placeholder="Enter content"/>
+                        <Form.Label htmlFor="postContents"> Content </Form.Label>
+                        <Form.Control as="textarea" rows={3} id = "postContents" placeholder="Enter content"/>
                     </Form.Group>
                     <Button variant="primary" type="submit"> Create Post </Button>
                 </Form>
