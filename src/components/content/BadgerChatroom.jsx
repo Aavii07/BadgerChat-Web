@@ -16,7 +16,7 @@ export default function BadgerChatroom(props) {
 
 
     const loadMessages = () => {
-        fetch(`https://cs571api.cs.wisc.edu/rest/su24/hw6/messages?chatroom=${props.name}&page=${currentPage}`, {
+        fetch(`https://cs571api.cs.wisc.edu/rest/su24/hw6/messages?chatroom=${props.name}`, {
             headers: {
                 "X-CS571-ID": CS571.getBadgerId()
             }
@@ -32,8 +32,8 @@ export default function BadgerChatroom(props) {
 
     // update messages display
     useEffect(() => {
-        const startIndex = (currentPage - 1) * 2;
-        const endIndex = currentPage * 2;
+        const startIndex = (currentPage - 1) * 25;
+        const endIndex = currentPage * 25;
         setDisplayedPosts(messages.slice(startIndex, endIndex));
     }, [messages]);
 
@@ -45,8 +45,8 @@ export default function BadgerChatroom(props) {
     const handlePostSubmit = (e) => {
         e.preventDefault();
 
-        const title = e.target.elements.title.value;
-        const content = e.target.elements.contents.value;
+        const title = e.target.elements.postTitle.value;
+        const content = e.target.elements.postContents.value;
 
         // pre api check
         if (!title || !content) {
@@ -93,11 +93,11 @@ export default function BadgerChatroom(props) {
         <h1>{props.name} Chatroom</h1>
             {loginStatus ? ( 
                 <Form onSubmit={handlePostSubmit}> 
-                    <Form.Group controlId="title"> {/* controlId needs to be in Form.Group to reference */}
+                    <Form.Group > 
                         <Form.Label htmlFor="postTitle"> Title </Form.Label>
                         <Form.Control type="text" id = "postTitle" placeholder="Enter title"/>
                     </Form.Group> 
-                    <Form.Group controlId="contents"> 
+                    <Form.Group > 
                         <Form.Label htmlFor="postContents"> Content </Form.Label>
                         <Form.Control as="textarea" rows={3} id = "postContents" placeholder="Enter content"/>
                     </Form.Group>
