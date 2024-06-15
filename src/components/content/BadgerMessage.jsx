@@ -33,7 +33,7 @@ function BadgerMessage(props) {
         <br/>
         <i style={{marginTop: "1rem"}}>{props.poster}</i>
         <p>{props.content}</p>
-        {props.personalPost && (
+        {(props.poster === props.loggedInUsername) && (
             <Button variant="danger" onClick={handleDelete}> Delete </Button>
         )}
     </Card>

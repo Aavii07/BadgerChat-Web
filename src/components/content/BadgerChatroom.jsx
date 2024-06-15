@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Container, Row, Col, Pagination, Form, Button } from "react-bootstrap";
 import BadgerMessage from './BadgerMessage';
-import BadgerLoginStatusContext from "../contexts/BadgerLoginStatusContext";
 
 export default function BadgerChatroom(props) {
 
@@ -13,26 +12,32 @@ export default function BadgerChatroom(props) {
 
     const storedLoginStatus = JSON.parse(sessionStorage.getItem("loginStatus"));
     const [loginStatus, setLoginStatus] = useState(storedLoginStatus || false)
-
-    let poster = null;
+    const loggedInUsername = sessionStorage.getItem("username");
 
 
     const loadMessages = () => {
         fetch(`https://cs571api.cs.wisc.edu/rest/su24/hw6/messages?chatroom=${props.name}&page=${currentPage}`, {
-            method: 'GET',
-            credentials: 'include',
             headers: {
-                'Content-Type': 'application/json',
                 "X-CS571-ID": CS571.getBadgerId()
             }
         }).then(res => res.json()).then(json => {
             setMessages(json.messages)
-
-            const startIndex = (currentPage - 1) * 25;
-            const endIndex = currentPage * 25;
-            setDisplayedPosts(messages.slice(startIndex, endIndex));
         })
     };
+
+    // reload messages for chatroom or page change
+    useEffect(() => {
+        loadMessages();
+    }, [currentPage]);
+
+    // update messages display
+    useEffect(() => {
+        const startIndex = (currentPage - 1) * 25;
+        const endIndex = currentPage * 25;
+        setDisplayedPosts(messages.slice(startIndex, endIndex));
+        console.log(displayedPosts);
+    }, [messages]);
+
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -80,19 +85,6 @@ export default function BadgerChatroom(props) {
         })
     }
 
-    // reload messages during chatroom or page change
-    useEffect(() => {
-        loadMessages();
-    }, [props.name, currentPage]);
-
-    // update posts when messages change
-    useEffect(() => {
-        const startIndex = (currentPage - 1) * 25;
-        const endIndex = currentPage * 25;
-        setDisplayedPosts(messages.slice(startIndex, endIndex));
-        loadMessages();
-    }, [messages, currentPage]);
-
     // Why can't we just say []?
     // The BadgerChatroom doesn't unload/reload when switching
     // chatrooms, only its props change! Try it yourself.
@@ -127,7 +119,7 @@ export default function BadgerChatroom(props) {
                                 displayedPosts.map((post) => (   
                                     <Col key={post.id} xs={12} sm={6} md={6} lg={4} xl={3}>
                                         <BadgerMessage {...post} 
-                                            personalPost={true}
+                                            loggedInUsername={loggedInUsername} // used to check if you made the post
                                             loadMessages={loadMessages} // allows delete function in badgerMessage to reload messages
                                         />
                                     </Col>
@@ -142,7 +134,7 @@ export default function BadgerChatroom(props) {
                 </>
         }
         <Pagination className = "justify-content-center" 
-            style={{ position: "fixed", bottom: 0, left: 0, right: 0 }}>
+            style={{ marginTop: "1rem"}}>
             {totalPages.map(pageNumber => (
                 <Pagination.Item
                     key={pageNumber}

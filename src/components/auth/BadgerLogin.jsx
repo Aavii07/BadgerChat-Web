@@ -52,6 +52,7 @@ export default function BadgerLogin() {
             else{
                 setLoginStatus(true);
                 sessionStorage.setItem("loginStatus", JSON.stringify(true));
+                sessionStorage.setItem("username", username);
                 alert('Login successful!');
                 navigate('/');
             }
