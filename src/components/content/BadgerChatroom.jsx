@@ -30,7 +30,6 @@ export default function BadgerChatroom(props) {
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
-        console.log(messages);
     };
 
     const handlePostSubmit = (e) => {
