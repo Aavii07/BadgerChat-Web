@@ -48,22 +48,26 @@ export default function BadgerRegister() {
             })
         })
         .then(res => {
-            // post api check
             if (res.status === 409) {
                 alert("That username has already been taken!");
                 throw new Error("409 Conflict Error");
             }
             return res.json();
         })
-        .then(
-            alert("Registration successful!")
-        )
+        .then(data => {
+            alert("Registration successful!");
+
+            // clear input fields
+            usernameReference.current.value = '';
+            pinReference.current.value = '';
+            confirmPinReference.current.value = '';
+        })
         .catch(error => {
             console.error("Error:", error);
             if (error.message !== "409 Conflict Error") {
                 alert("Something went wrong, please try again.");
             }
-        });
+        }); 
     };
     
 
